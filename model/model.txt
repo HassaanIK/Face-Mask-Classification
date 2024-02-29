@@ -1,0 +1,1 @@
+This is the model [link](https://huggingface.co/hassaanik/Face_Mask_Detector/blob/main/facemask_model_statedict__f.pth)
