@@ -33,7 +33,7 @@ lr = 0.001
 num_epochs = 5
 opt_func = torch.optim.Adam
 
-# history = fit(num_epochs, lr, model, train_dl, val_dl, opt_func)
+history = fit(num_epochs, lr, model, train_dl, val_dl, opt_func)
 
 
-# torch.save(model.state_dict(), 'facemask_model_statedict1.pth')
+torch.save(model.state_dict(), 'facemask_model_statedict1.pth')
