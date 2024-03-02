@@ -1,57 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Face Mask Detection</title>
-    <style>
-        .container {
-            text-align: center;
-            margin-top: 50px;
-        }
-        img {
-            max-width: 400px;
-            max-height: 400px;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Face Mask Classification</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Face Mask Detection</h1>
-        <form id="uploadForm" enctype="multipart/form-data">
-            <input type="file" name="image" id="imageInput" accept="image/*">
-            <button type="button" onclick="uploadImage()">Predict</button>
-        </form>
-        <div id="result"></div>
-        <img src="" id="uploadedImage" style="display:none;">
-    </div>
-
-    <script>
-        function uploadImage() {
-            var fileInput = document.getElementById('imageInput');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('image', file);
-    
-            fetch('/predict', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                var resultDiv = document.getElementById('result');
-                var predictionText = `Prediction: ${data.prediction}`;
-                var probabilityText = `Probability: ${data.probability.toFixed(2)}`;
-                resultDiv.innerHTML = `${predictionText}<br>${probabilityText}`;
-    
-                var uploadedImage = document.getElementById('uploadedImage');
-                uploadedImage.src = 'data:image/jpeg;base64,' + data.image;
-                uploadedImage.style.display = 'block';
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    </script>
-    
+    <h1>Face Mask Prediction</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*">
+        <button type="submit">Predict</button>
+    </form>
+    {% if image %}
+    <h2>Uploaded Image</h2>
+    <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image">
+    <h2>Prediction</h2>
+    <p>Class: {{ class_name }}</p>
+    <p>Probability: {{ probability }}</p>
+    {% endif %}
 </body>
 </html>
