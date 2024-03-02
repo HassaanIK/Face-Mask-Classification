@@ -27,4 +27,4 @@ This project focuses on building a deep learning model for detecting whether a p
 4. Access the application in your web browser at `http://localhost:5000`.
 
 ### Web App
-![Screenshot (29)](https://github.com/HassaanIK/Face-Mask-Classification/assets/139614780/d7321e80-9200-40ae-bca8-e489cdadd3de)
+![Screenshot (31)](https://github.com/HassaanIK/Face-Mask-Classification/assets/139614780/a0712e17-a286-4f22-9844-720ea36c944f)
