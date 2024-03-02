@@ -1,12 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 from PIL import Image
 import torch
-import io
+from io import BytesIO
 import base64
-from torchvision import transforms
 from model import model
 from predict import predict_mask
-import numpy as np
 
 app = Flask(__name__)
 
@@ -21,17 +19,20 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get the image from the request
-        image = request.files['image']
-        predicted_class, probability = predict_mask(image, model)
-        print(f'Predicted Class: {predicted_class}')
+        # Get the image file from the request
+        file = request.files['file']
+
+        class_name, probability, image = predict_mask(file, model)
+        print(f'Predicted Class: {class_name}')
         print(f'Probability: {probability}')
         
-        # Convert the image to base64
-        image_base64 = base64.b64encode(image.read()).decode('utf-8')
+        # Convert image to base64 format
+        buffered = BytesIO()
+        image.save(buffered, format="PNG")
+        img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
         # Return the prediction, probability, and image as base64
-        return jsonify({'prediction': predicted_class, 'probability': probability, 'image': image_base64})
+        return render_template('index.html', image=img_str, class_name=class_name, probability=probability)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

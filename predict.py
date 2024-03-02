@@ -35,4 +35,4 @@ def predict_mask(image_path, model):
     # Define class labels
     class_labels = ['with mask', 'without mask']
 
-    return class_labels[predicted_class], predicted_probability
+    return class_labels[predicted_class], predicted_probability, image
